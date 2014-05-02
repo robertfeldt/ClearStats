@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>OpenCPU Markdown App</title>
-    
-<script src="bower_components/underscore/underscore.js"></script>    
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="js/opencpu-0.5.js"></script>
-<script src="bower_components/ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+  <title>OpenCPU Markdown App</title>
 
-<script>
-$(function(){
-  var editor = ace.edit("editor");
-  editor.setTheme("ace/theme/monokai");
-  editor.getSession().setMode("ace/mode/r");
-  editor.setFontSize("14px");
+  <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <script src="bower_components/underscore/underscore.js"></script>    
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="js/opencpu-0.5.js"></script>
+  <script src="bower_components/ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <script>
+    $(function(){
+      var editor = ace.edit("editor");
+      editor.setTheme("ace/theme/monokai");
+      editor.getSession().setMode("ace/mode/r");
+      editor.setFontSize("14px");
 
   //This app requires OpenCPU 1.0.1 or higher!
   
@@ -36,59 +39,63 @@ $(function(){
   //init on start
   domarkdown();  
 });
-</script>
+  </script>
 
-<style type="text/css" media="screen">
- 
-#editor { 
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 90%;
-  height: 90%;
-}
+  <style type="text/css" media="screen">
+    body { 
+      padding-top: 65px; 
+    }
 
-iframe { 
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  width: 604px;
-  height: 90%;
-  border: 0;
-  margin: 0;
-  z-index: 999999;
-}
+    #editor { 
+      height: 200px;
+      width: 300px;
+    }
+  </style>
 
-</style>
 </head>
 <body>
 
-<div id="editor">The Normal Distribution
-=======================
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">ClearStats</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Compare 2</a></li>
+          <li><a href="#">Help</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-The normal (or Gaussian) distribution is defined as follows:
+  <div class="row">
 
-$$latex
-f(x;\mu,\sigma^2) = \frac{1}{\sigma\sqrt{2\pi}} 
-e^{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2 }
-$$
+    <div class="col-md-1">
+    </div>
 
-To generate random draws from a normal distribution we use the **rnorm** function:
+    <div class="col-md-5">
 
-```{r block1}
-output <- rnorm(1000, 100, 15);
-```
+      <h3 class="panel-title">Data set A</h3>
 
-The normal distribution has the typical bell shape:
+      <div id="editor">10, 20, 30</div>
 
-```{r block2, fig.width=8, fig.height=5}
-library(ggplot2)
-qplot(output)
-```
+    </div>
 
-</div>
+    <div class="col-md-5">
+      <iframe src="about:blank"></iframe>
+    </div>
 
-<iframe src="about:blank"></iframe>
+    <div class="col-md-1">
+    </div>
+
+  </div>
 
 </body>
 </html>
