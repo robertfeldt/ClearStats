@@ -6,7 +6,7 @@ on pre-packaged best practices. The goal is to make powerful, statistical tools
 available also to non-statisticians. Also includes web apps for common tasks 
 such as comparing two data sets. These web apps are implemented as OpenCPU apps.
 
-To install in R:
+To install in R (this will work once we make the bitbucket repo public):
 
     library(devtools)
     install_bitbucket("clearstats", "robertfeldt")
@@ -17,6 +17,6 @@ To install in R:
 Use the same function locally:
 
     library(clearstats)
-    ?ClearStats
+    ?clearstats
 
 For more information about OpenCPU apps, see [opencpu.js](https://github.com/jeroenooms/opencpu.js#readme)
