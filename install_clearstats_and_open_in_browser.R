@@ -1,0 +1,5 @@
+library(devtools)
+install('.')
+library(opencpu)
+opencpu$start()
+opencpu$browse("library/clearstats/www")

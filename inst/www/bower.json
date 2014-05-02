@@ -1,0 +1,17 @@
+{
+  "name": "clearstats web app",
+  "version": "0.0.0",
+  "authors": [
+    "Robert Feldt <robert.feldt@gmail.com>"
+  ],
+  "description": "Web app front end to the clearstats R package - simple and clear statistical analysis for everyone!",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "www.clearstats.net",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "underscore": "~1.6.0",
+    "ace-builds": "master"
+  }
+}

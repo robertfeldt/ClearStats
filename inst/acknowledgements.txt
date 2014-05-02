@@ -1,0 +1,1 @@
+icon.png is from the markdownapp OpenCPU web app by Jeroen Ooms, see https://github.com/opencpu/markdownapp
