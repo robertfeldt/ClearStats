@@ -1,4 +1,6 @@
 export(density_plot)
+export(is_dataset_normally_distributed)
+
 import(RJSONIO)
 import(ggplot2)
 import(httr)

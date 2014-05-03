@@ -16,13 +16,13 @@
       var editorA = ace.edit("editorA");
       editorA.setTheme("ace/theme/textmate");
       editorA.getSession().setMode("ace/mode/r");
-      editorA.setFontSize("12px");
+      editorA.setFontSize("14px");
       editorA.setValue("10, 16, 20, 20, 24, 30", 1); // 1 => cursor pos at end
 
       var editorB = ace.edit("editorB");
       editorB.setTheme("ace/theme/solarized_light");
       editorB.getSession().setMode("ace/mode/r");
-      editorB.setFontSize("12px");
+      editorB.setFontSize("14px");
       editorB.setValue("22, 22, 24, 28, 40, 55", 1); // 1 => cursor pos at end
 
       //This app requires OpenCPU 1.0.1 or higher!
@@ -36,12 +36,16 @@
         });
       }
 
+      function update(){
+        draw_densityplot();
+      }
+
       //auto run after 3 seconds of no activity
       //var update = _.debounce(domarkdown, 3000);
 
       //register events
-      editorA.on("change", draw_densityplot);
-      editorB.on("change", draw_densityplot);
+      editorA.on("change", update);
+      editorB.on("change", update);
 
       // Set editor A in focus
       editorA.focus();
@@ -61,7 +65,7 @@
     -moz-border-radius: 3px; 
     -webkit-border-radius: 3px; 
     border-radius: 3px;
-    height: 200px;
+    height: 60px;
     width: 100%;
   }
 
@@ -70,12 +74,12 @@
     -moz-border-radius: 3px; 
     -webkit-border-radius: 3px; 
     border-radius: 3px;
-    height: 200px;
+    height: 60px;
     width: 100%;
   }
 
   #densityplot {
-    height: 400px;
+    height: 320px;
   }
 </style>
 
@@ -104,27 +108,71 @@
   </div>
 
   <div class="row">
+    <div class="col-md-1"></div>
 
-    <div class="col-md-1">
-    </div>
-
-    <div class="col-md-2">
-      <h3>Data set A</h3>
-      <div id="editorA"></div>
-    </div>
-
-    <div class="col-md-6">
+    <div class="col-md-5">
       <h6>Currently a bit slow since we are using rplot widget; will switch to direct calls later to speed up</h6>
       <div id="densityplot"></div>
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-4">
+    </div>
+
+    <div class="col-md-1"></div>
+
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-1"></div>
+    <hr>
+    <div class="col-md-1"></div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-1"></div>
+
+    <div class="col-md-5">
+      <h3>Data set A</h3>
+
+      <div id="editorA"></div>
+
+      <br />
+
+      <table id="normalityTableA" class="table table-striped table-bordered table-condensed table-hovered">
+        <thead>
+          <tr>
+            <th>Test</th>
+            <th>p-value</th>
+            <th>Normal?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Andersson-Darling</th>
+            <th>0.04</th>
+            <th>Yes!</th>
+          </tr>
+
+          <tr>
+            <th>Mises-Cramer</th>
+            <th>0.10</th>
+            <th>No!</th>
+          </tr>
+        </tbody>
+      </table>
+
+      <div id="textA">
+      </div>
+    </div>
+
+    <div class="col-md-5">
       <h3>Data set B</h3>
       <div id="editorB"></div>
     </div>
 
-    <div class="col-md-1">
-    </div>
+    <div class="col-md-1"></div>
 
   </div>
 
