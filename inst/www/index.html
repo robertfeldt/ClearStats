@@ -20,7 +20,7 @@
       editorA.setValue("10, 16, 20, 20, 24, 30", 1); // 1 => cursor pos at end
 
       var editorB = ace.edit("editorB");
-      editorB.setTheme("ace/theme/monokai");
+      editorB.setTheme("ace/theme/solarized_light");
       editorB.getSession().setMode("ace/mode/r");
       editorB.setFontSize("14px");
       editorB.setValue("22, 22, 24, 28, 40, 55", 1); // 1 => cursor pos at end
@@ -57,13 +57,21 @@
   }
 
   #editorA { 
+    border: 1px solid #DFDFDF;
+    -moz-border-radius: 3px; 
+    -webkit-border-radius: 3px; 
+    border-radius: 3px;
     height: 200px;
-    width: 300px;
+    width: 100%;
   }
 
   #editorB { 
+    border: 1px solid #DFDFDF;
+    -moz-border-radius: 3px; 
+    -webkit-border-radius: 3px; 
+    border-radius: 3px;
     height: 200px;
-    width: 300px;
+    width: 100%;
   }
 
   #densityplot {
@@ -100,17 +108,17 @@
     <div class="col-md-1">
     </div>
 
-    <div class="col-md-3">
-      <h3 class="panel-title">Data set A</h3>
+    <div class="col-md-2">
+      <h3>Data set A</h3>
       <div id="editorA"></div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
       <div id="densityplot"></div>
     </div>
 
-    <div class="col-md-3">
-      <h3 class="panel-title">Data set B</h3>
+    <div class="col-md-2">
+      <h3>Data set B</h3>
       <div id="editorB"></div>
     </div>
 
