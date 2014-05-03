@@ -4,5 +4,14 @@
  - http://virtualboximages.com/Ubuntu+14.04+LTS+i386+Desktop+VirtualBox+VDI+Virtual+Computer
  - After unpack you should get a .vdi file
 
-3. Strat VirtualBox and create a new virtual machine
- - I selected 4096MB for memory and 
+3. Start VirtualBox and create a new virtual machine
+ - I selected 4GB for memory and 8GB for its hard disk
+
+4. Start your VM with Ubuntu 14.04
+
+5. Open a terminal in ubuntu and install opencpu:
+	sudo add-apt-repository ppa:opencpu/opencpu-1.4
+	sudo apt-get update
+	sudo apt-get install opencpu  
+
+6. 
