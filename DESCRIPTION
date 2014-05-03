@@ -1,7 +1,7 @@
-Package: clearstats
+Package: ClearStats
 Type: Package
-Title: clearstats package and web app (using OpenCPU)
-Version: 0.0.0
+Title: ClearStats - making statistics clear and simple for everyone
+Version: 0.0.1
 Date: 2014-04-18
 Author: Robert Feldt, Simon Poulding, Richard Torkar, Wasif Afzal
 Maintainer: Robert Feldt <robert.feldt@gmail.com>
@@ -11,7 +11,5 @@ Imports:
     ggplot2,
     RJSONIO,
     httr
-Depends:
-    knitr
 Suggests:
     opencpu (>= 1.0.1)

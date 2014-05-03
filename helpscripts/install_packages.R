@@ -1,10 +1,9 @@
 needed_packages = c(
   "ggplot2",
-  "nortest",
-  "opencpu",
-  "httr",
   "RJSONIO",
-  "knitr"
+  "httr",
+  "opencpu",
+  "nortest"
 )
 
 install_if_missing = function(p) {
