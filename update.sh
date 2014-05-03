@@ -1,2 +1,2 @@
 #!/bin/sh
-Rscript ./install_clearstats.R
+Rscript ./helpscripts/install_clearstats.R
