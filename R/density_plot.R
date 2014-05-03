@@ -39,4 +39,5 @@ density_plot <- function(datasetAstr, datasetBstr) {
   geom_vline(xintercept = medianB, linetype="dotted", size=0.5);
 
   print(p);
+  invisible(); # So we do not both print and return the plot...
 }
