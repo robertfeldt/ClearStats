@@ -1,4 +1,4 @@
-export(rmdtext)
+export(density_plot)
 import(RJSONIO)
 import(ggplot2)
 import(httr)

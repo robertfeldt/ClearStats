@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>OpenCPU Markdown App</title>
+  <title>ClearStats</title>
 
   <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -13,44 +13,63 @@
 
   <script>
     $(function(){
-      var editor = ace.edit("editor");
-      editor.setTheme("ace/theme/monokai");
-      editor.getSession().setMode("ace/mode/r");
-      editor.setFontSize("14px");
+      var editorA = ace.edit("editorA");
+      editorA.setTheme("ace/theme/textmate");
+      editorA.getSession().setMode("ace/mode/r");
+      editorA.setFontSize("14px");
+      editorA.setValue("10, 16, 20, 20, 24, 30", 1); // 1 => cursor pos at end
 
-  //This app requires OpenCPU 1.0.1 or higher!
-  
-  function domarkdown(e){
-    var req = ocpu.call("rmdtext", {
-      text : editor.getSession().getValue()
-    }, function(session){
-      $("iframe").attr('src', session.getFileURL("output.html"));     
-    }).fail(function(text){
-      alert("Error: " + req.responseText);
+      var editorB = ace.edit("editorB");
+      editorB.setTheme("ace/theme/monokai");
+      editorB.getSession().setMode("ace/mode/r");
+      editorB.setFontSize("14px");
+      editorB.setValue("22, 22, 24, 28, 40, 55", 1); // 1 => cursor pos at end
+
+      //This app requires OpenCPU 1.0.1 or higher!
+
+      function draw_densityplot(){
+        var req = $("#densityplot").rplot("density_plot", {
+          datasetA : editorA.getValue(),
+          datasetB : editorB.getValue()
+        }).fail(function(){
+          alert(req.responseText);
+        });
+      }
+
+      //auto run after 3 seconds of no activity
+      //var update = _.debounce(domarkdown, 3000);
+
+      //register events
+      editorA.on("change", draw_densityplot);
+      editorB.on("change", draw_densityplot);
+
+      // Set editor A in focus
+      editorA.focus();
+
+      //draw on start
+      draw_densityplot();
     });
+</script>
+
+<style type="text/css" media="screen">
+  body { 
+    padding-top: 65px; 
   }
 
-  //auto run after 3 seconds of no activity
-  var update = _.debounce(domarkdown, 3000);
-  
-  //register event
-  editor.on("change", update);
-  
-  //init on start
-  domarkdown();  
-});
-  </script>
+  #editorA { 
+    height: 200px;
+    width: 300px;
+  }
 
-  <style type="text/css" media="screen">
-    body { 
-      padding-top: 65px; 
-    }
+  #editorB { 
+    height: 200px;
+    width: 300px;
+  }
 
-    #editor { 
-      height: 200px;
-      width: 300px;
-    }
-  </style>
+  #densityplot {
+    height: 400px;
+  }
+</style>
 
 </head>
 <body>
@@ -69,6 +88,7 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           <li><a href="#">Compare 2</a></li>
+          <li><a href="#">Analyze 1</a></li>
           <li><a href="#">Help</a></li>
         </ul>
       </div>
@@ -80,16 +100,18 @@
     <div class="col-md-1">
     </div>
 
-    <div class="col-md-5">
-
+    <div class="col-md-3">
       <h3 class="panel-title">Data set A</h3>
-
-      <div id="editor">10, 20, 30</div>
-
+      <div id="editorA"></div>
     </div>
 
-    <div class="col-md-5">
-      <iframe src="about:blank"></iframe>
+    <div class="col-md-4">
+      <div id="densityplot"></div>
+    </div>
+
+    <div class="col-md-3">
+      <h3 class="panel-title">Data set B</h3>
+      <div id="editorB"></div>
     </div>
 
     <div class="col-md-1">
