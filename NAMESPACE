@@ -2,7 +2,5 @@ export(density_plot)
 export(is_dataset_normally_distributed)
 
 import(ggplot2)
-import(RJSONIO)
-import(httr)
 import(opencpu)
 import(nortest)

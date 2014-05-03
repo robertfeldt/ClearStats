@@ -9,7 +9,6 @@ Description: R package and accompanying OpenCPU application that uses best pract
 License: GPL
 Imports:
     ggplot2,
-    RJSONIO,
-    httr
+    nortest
 Suggests:
     opencpu (>= 1.0.1)
