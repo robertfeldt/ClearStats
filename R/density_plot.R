@@ -23,7 +23,7 @@ density_plot <- function(datasetAstr, datasetBstr) {
   data <- data.frame.from.strings(datasetAstr, datasetBstr);
 
   p <- ggplot(data, aes(x = value, fill = dataset)) +
-  geom_density(alpha = 0.4) +
+  geom_density(alpha = 0.3) +
   theme_bw() +
   theme(
     plot.background = element_blank(),
