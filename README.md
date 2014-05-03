@@ -14,6 +14,10 @@ To install in R (this will work once we make the bitbucket repo public):
     library(opencpu)
     opencpu$browse("library/clearstats/www")
 
+To run the publically available version on the public OpenCPU server point your browser to (note that these releases are less frequent so do not have the latest version):
+
+	http://robertfeldt.ocpu.io/ClearStats/www/
+
 To run from the local library:
 
     make start
