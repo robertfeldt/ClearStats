@@ -1,0 +1,8 @@
+1. Install VirtualBox
+
+2. Download Ubuntu 14.04 for VirtualBox and unpack
+ - http://virtualboximages.com/Ubuntu+14.04+LTS+i386+Desktop+VirtualBox+VDI+Virtual+Computer
+ - After unpack you should get a .vdi file
+
+3. Strat VirtualBox and create a new virtual machine
+ - I selected 4096MB for memory and 
