@@ -16,15 +16,21 @@ To install in R (this will work once we make the bitbucket repo public):
 
 To run from the local library:
 
-    ./start.sh
+    make start
 
 And to reinstall after you have changed something (do NOT run start.sh more than once; it will start multiple R sessions for OpenCPU):
 
-    ./update.sh
+    make update
 
 To use the R package without the web app just load into R and check docs:
 
     library(clearstats)
     ?clearstats
+
+There are also simpler Shiny web apps used for protoyping, which you can start like:
+
+	make compare2
+
+etc. For details see the Makefile.
 
 For more information about OpenCPU apps, see [opencpu.js](https://github.com/jeroenooms/opencpu.js#readme)

@@ -1,5 +1,7 @@
 library(ggplot2)
 
+# Parse a string of numbers, separated by non-digits, into an R
+# vector.
 parse_dataset_from_string <- function(string) {
   # This works but does not parse 1e-3 etc:
   # re <- "(\\d+\\.\\d+)|(\\d+)"
@@ -9,7 +11,7 @@ parse_dataset_from_string <- function(string) {
   na.omit(as.numeric(unlist(strsplit(string, "\\s*(,|;|\\s+)\\s*"))))
 }
 
-data.frame.from.strings <- function(datasetAstr, datasetBstr) {
+data_frame_from_strings <- function(datasetAstr, datasetBstr) {
   a <- parse_dataset_from_string(datasetAstr);
   b <- parse_dataset_from_string(datasetBstr);
 
@@ -20,7 +22,7 @@ data.frame.from.strings <- function(datasetAstr, datasetBstr) {
 }
 
 density_plot <- function(datasetAstr, datasetBstr) {
-  data <- data.frame.from.strings(datasetAstr, datasetBstr);
+  data <- data_frame_from_strings(datasetAstr, datasetBstr);
 
   p <- ggplot(data, aes(x = value, fill = dataset)) +
   geom_density(alpha = 0.3) +
