@@ -12,6 +12,7 @@
 5. Open a terminal in ubuntu and install opencpu (just click ok and select default choices if prompted during installs):
 	sudo add-apt-repository ppa:opencpu/opencpu-1.4
 	sudo apt-get update
-	sudo apt-get install opencpu  
+	sudo apt-get install opencpu
+	sudo apt-get install opencpu-full
 
 6. 
