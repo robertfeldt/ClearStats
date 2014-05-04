@@ -34,7 +34,9 @@ density_plot <- function(a, b) {
     plot.background = element_blank(),
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
-    panel.border = element_blank()
+    panel.border = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank()
     )
 
   medianA <- median(subset(data, dataset == "A")$value);
