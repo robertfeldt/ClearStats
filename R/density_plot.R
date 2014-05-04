@@ -21,8 +21,11 @@ data_frame_from_strings <- function(datasetAstr, datasetBstr) {
     )  
 }
 
-density_plot <- function(datasetAstr, datasetBstr) {
-  data <- data_frame_from_strings(datasetAstr, datasetBstr);
+density_plot <- function(a, b) {
+  data <- rbind(
+    data.frame(dataset = rep("A", times=length(a)), value=a), 
+    data.frame(dataset = rep("B", times=length(b)), value=b)
+    )  
 
   p <- ggplot(data, aes(x = value, fill = dataset)) +
   geom_density(alpha = 0.3) +

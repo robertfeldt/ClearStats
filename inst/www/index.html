@@ -27,10 +27,14 @@
 
       //This app requires OpenCPU 1.0.1 or higher!
 
+      function parse_dataset_from_string(str){
+        return( str.split(/\s*(?:,|;|\s+)\s*/).map(parseFloat) )
+      }
+
       function draw_densityplot(){
         var req = $("#densityplot").rplot("density_plot", {
-          datasetA : editorA.getValue(),
-          datasetB : editorB.getValue()
+          "a" : parse_dataset_from_string(editorA.getValue()),
+          "b" : parse_dataset_from_string(editorB.getValue())
         }).fail(function(){
           alert(req.responseText);
         });
@@ -111,7 +115,6 @@
     <div class="col-md-1"></div>
 
     <div class="col-md-5">
-      <h6>Currently slow when running locally or from robertfeldt.ocpu.io/ClearStats/www; needs preload on cloud server to shine!?</h6>
       <div id="densityplot"></div>
     </div>
 
