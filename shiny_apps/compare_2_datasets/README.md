@@ -8,4 +8,4 @@ To run it simply do:
 from the ClearStats root dir.
 
 After installing any missing R packages the shiny web app starts up
-and you can point your browser to the url it prints on stdout.
+and you can point your browser to the url printed on stdout.
