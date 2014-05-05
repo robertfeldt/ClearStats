@@ -6,15 +6,21 @@
 function parseSamplingDescriptionToRCode(description) {
 	var match = /\s*([A-Za-z]+)\((\d+)\s*,\s*(\d+)\)\s+-\s+(\d+)\s+samples/i.exec(description);
 
-	if(match[1].toLowerCase() == "uniform") {
+	if(match == null) {
+		if(description == "Original data") {
+			return( "original_data_set" );
+		} else {
+			return( "unknown" );
+		}
+	} else {
+		if(match[1].toLowerCase() == "uniform") {
 
-		return( ["runif_sample", {"n": parseInt(match[4]), "min": parseFloat(match[2]), "max": parseFloat(match[3])}] );
+			return( ["runif_sample", {"n": parseInt(match[4]), "min": parseFloat(match[2]), "max": parseFloat(match[3])}] );
 
-	} else if (match[1].toLowerCase() == "normal") {
+		} else if (match[1].toLowerCase() == "normal") {
 
-		return( ["rnorm_sample", {"n": parseInt(match[4]), "mean": parseFloat(match[2]), "sd": parseFloat(match[3])}] );
+			return( ["rnorm_sample", {"n": parseInt(match[4]), "mean": parseFloat(match[2]), "sd": parseFloat(match[3])}] );
 
+		} 
 	}
-
-	return "unknown";
 }

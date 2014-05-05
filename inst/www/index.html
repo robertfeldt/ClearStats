@@ -22,14 +22,16 @@
       editorA.setHighlightActiveLine(false);
       editorA.getSession().setMode("ace/mode/r");
       editorA.setFontSize("14px");
-      editorA.setValue("10, 16, 20, 20, 24, 30", 1); // 1 => cursor pos at end
+      var original_data_a = "10, 16, 20, 20, 24, 30";
+      editorA.setValue(original_data_a, 1); // 1 => cursor pos at end
 
       var editorB = ace.edit("editorB");
       editorB.setTheme("ace/theme/clouds");
       editorB.setHighlightActiveLine(false); // Needed with clouds theme since it becomes yellow otherwise
       editorB.getSession().setMode("ace/mode/r");
       editorB.setFontSize("14px");
-      editorB.setValue("22, 22, 24, 28, 40, 55", 1); // 1 => cursor pos at end
+      var original_data_b = "22, 22, 24, 28, 40, 55";
+      editorB.setValue(original_data_b, 1); // 1 => cursor pos at end
 
       //This app requires OpenCPU 1.0.1 or higher!
 
@@ -71,7 +73,7 @@
       update_if_input_changed();
 
       // Set up the insert menus so that they sample data and insert into editor
-      function setup_insert_dataset_dropdown_handler(divId, editorObj) {
+      function setup_insert_dataset_dropdown_handler(divId, editorObj, originalDataset) {
         var menu_id = ["#", divId, ".dropdown-menu li"].join("");
 
         $(document.body).on('click', menu_id, function (event) {
@@ -87,7 +89,12 @@
 
           var call_info = parseSamplingDescriptionToRCode(sampling_description);
 
-          if(call_info != "unknown") {
+          if(call_info == "original_data_set") {
+
+            editorObj.getSession().setValue(originalDataset);
+
+          } else if(call_info != "unknown") {
+
             var req = ocpu.rpc(call_info[0], call_info[1], function(output){
               var s = numbersToString(output, 3, 10);
               editorObj.getSession().setValue(s);
@@ -95,8 +102,11 @@
             req.fail(function(){
               alert("R returned an error: " + req.responseText); 
             });
+
           } else {
+
             alert("Could not sample with description: " + description); 
+
           }
 
           return false;
@@ -104,8 +114,8 @@
         });
       }
 
-      setup_insert_dataset_dropdown_handler("InsertMenuA", editorA);
-      setup_insert_dataset_dropdown_handler("InsertMenuB", editorB);
+      setup_insert_dataset_dropdown_handler("InsertMenuA", editorA, original_data_a);
+      setup_insert_dataset_dropdown_handler("InsertMenuB", editorB, original_data_b);
 
       // Set editor A in focus
       editorA.focus();
@@ -202,6 +212,8 @@
               <li class="divider"></li>
               <li><a href="#">Normal(10, 4) - 50 samples</a></li>
               <li><a href="#">Normal(40, 4) - 50 samples</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Original data</a></li>
             </ul>
           </div>
         </div>
@@ -257,6 +269,8 @@
               <li class="divider"></li>
               <li><a href="#">Normal(10, 4) - 50 samples</a></li>
               <li><a href="#">Normal(40, 4) - 50 samples</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Original data</a></li>
             </ul>
           </div>
         </div>
