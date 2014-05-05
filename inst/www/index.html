@@ -11,6 +11,8 @@
   <script src="bower_components/ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
+  <script src="js/dataset.js"></script>
+
   <script>
     $(function(){
       var editorA = ace.edit("editorA");
@@ -27,16 +29,6 @@
 
       //This app requires OpenCPU 1.0.1 or higher!
 
-      function parse_dataset_from_string(str){
-        // Split then parse to float. Might return NaN for non-number strings.
-        var values = str.split(/\s*(?:,|;|\s+)\s*/).map(parseFloat);
-
-        // Filter so NaN is not returned.
-        var result = _.filter(values, function(n){ return !isNaN(n)});
-        
-        return( result );
-      }
-
       function draw_densityplot(args){
         var req = $("#densityplot").rplot("density_plot", args).fail(function(){
           alert(req.responseText);
@@ -51,46 +43,15 @@
         return(result);
       }
 
-      var datasets;
-
-      // Comparing objects for equality in Javascript is quite complex but this
-      // should take care of it even if recursive hash-like objects etc.
-      function isEqualRecursiveCompare(obj, reference){
-        if(obj === reference) return true;
-        if(obj.constructor !== reference.constructor) return false;
-        if(obj instanceof Array){
-          if(obj.length !== reference.length) return false;
-          for(var i=0, len=obj.length; i<len; i++){
-            if(typeof obj[i] == "object" && typeof reference[j] == "object"){
-              if(!isEqualRecursiveCompare(obj[i], reference[i])) return false;
-            } else if(obj[i] !== reference[i]) {return false;}
-          }
-        } else {
-          var objListCounter = 0;
-          var refListCounter = 0;
-          for(var i in obj){
-            objListCounter++;
-            if(typeof obj[i] == "object" && typeof reference[i] == "object"){
-              if(!isEqualRecursiveCompare(obj[i], reference[i])) return false;
-            }
-            else if(obj[i] !== reference[i]) return false;
-          }
-          for(var i in reference) refListCounter++;
-            if(objListCounter !== refListCounter) return false;
-        }
-        return true; //Every object and array is equal
-      }
+      var datasets = []; // Set to empty to make sure it is updated on first run...
 
       function update_if_input_changed(){
-        var dsets = parse_datasets();
+        var current_datasets = parse_datasets();
 
         // We only update if there was actually a change in the datasets entered
         // in the editor windows...
-        if(isEqualRecursiveCompare(dsets, datasets)) {
-          // console.log("No change!")
-        } else {
-          datasets = dsets;
-          // console.log("Changed!")
+        if(!isEqualRecursiveCompare(current_datasets, datasets)) {
+          datasets = current_datasets;
           draw_densityplot(datasets);
         }
       }
@@ -102,9 +63,8 @@
       editorA.on("change", update_if_input_changed);
       editorB.on("change", update_if_input_changed);
 
-      //draw on start
-      datasets = parse_datasets();
-      draw_densityplot(datasets);
+      //make sure we update on start by indicating there has been a change
+      update_if_input_changed();
 
       // Set editor A in focus
       editorA.focus();
