@@ -22,7 +22,7 @@
       editorA.setHighlightActiveLine(false);
       editorA.getSession().setMode("ace/mode/r");
       editorA.setFontSize("14px");
-      var original_data_a = "10, 16, 20, 20, 24, 30";
+      var original_data_a = "# You can edit and add your own data here:\n10, 16, 20, 20, 24, 30";
       editorA.setValue(original_data_a, 1); // 1 => cursor pos at end
 
       var editorB = ace.edit("editorB");
@@ -30,7 +30,7 @@
       editorB.setHighlightActiveLine(false); // Needed with clouds theme since it becomes yellow otherwise
       editorB.getSession().setMode("ace/mode/r");
       editorB.setFontSize("14px");
-      var original_data_b = "22, 22, 24, 28, 40, 55";
+      var original_data_b = "# And here:\n22, 22, 24, 28, 40, 55";
       editorB.setValue(original_data_b, 1); // 1 => cursor pos at end
 
       //This app requires OpenCPU 1.0.1 or higher!
