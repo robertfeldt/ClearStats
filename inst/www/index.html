@@ -87,7 +87,7 @@
 
           if(call_info != "unknown") {
             var req = ocpu.rpc(call_info[0], call_info[1], function(output){
-              var s = "# " + sampling_description + "\n" + numbersToString(output, 3, 10);
+              var s = numbersToString(output, 3, 10);
               editorObj.getSession().setValue(s);
             });
             req.fail(function(){
