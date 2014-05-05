@@ -18,13 +18,15 @@
   <script>
     $(function(){
       var editorA = ace.edit("editorA");
-      editorA.setTheme("ace/theme/solarized_light");
+      editorA.setTheme("ace/theme/tomorrow");
+      editorA.setHighlightActiveLine(false);
       editorA.getSession().setMode("ace/mode/r");
       editorA.setFontSize("14px");
       editorA.setValue("10, 16, 20, 20, 24, 30", 1); // 1 => cursor pos at end
 
       var editorB = ace.edit("editorB");
-      editorB.setTheme("ace/theme/textmate");
+      editorB.setTheme("ace/theme/clouds");
+      editorB.setHighlightActiveLine(false); // Needed with clouds theme since it becomes yellow otherwise
       editorB.getSession().setMode("ace/mode/r");
       editorB.setFontSize("14px");
       editorB.setValue("22, 22, 24, 28, 40, 55", 1); // 1 => cursor pos at end
