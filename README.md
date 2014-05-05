@@ -1,5 +1,4 @@
-ClearStats package and web app
-------------------------------
+# ClearStats package and web app
 
 ClearStats provides clear and well-argued statistical analysis and results based 
 on pre-packaged best practices. The goal is to make powerful, statistical tools
@@ -39,7 +38,7 @@ etc. For details see the Makefile.
 
 For more information about OpenCPU apps, see [opencpu.js](https://github.com/jeroenooms/opencpu.js#readme)
 
-# Acknowledgements
+## Acknowledgements
 
 This work was partly funded by The Knowledge Foundation (KKS) through the project 20130085 Testing of Critical System Characteristics (TOCSYC), and by Vinnova (Swedish Innovation Agency) through the project Test Innovation Engine Sweden (TIES).
 
