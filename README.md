@@ -16,11 +16,7 @@ To start the OpenCPU web app:
     library(opencpu)
     opencpu$browse("library/ClearStats/www")
 
-To run the publically available version on the public OpenCPU server point your browser to:
-
-	http://robertfeldt.ocpu.io/ClearStats/www/
-
-To run from your local git repo:
+To run the publically available version on the public OpenCPU server point your browser to [http://robertfeldt.ocpu.io/ClearStats/www/](http://robertfeldt.ocpu.io/ClearStats/www/). To run from your local git repo:
 
     make start
 
