@@ -42,3 +42,4 @@ function isEqualRecursiveCompare(obj, reference){
 
   return true; //Every object and array is equal
 }
+

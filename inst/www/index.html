@@ -11,7 +11,9 @@
   <script src="bower_components/ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
+  <script src="js/utils.js"></script>
   <script src="js/dataset.js"></script>
+  <script src="js/sample_and_insert_dataset.js"></script>
 
   <script>
     $(function(){
@@ -65,6 +67,42 @@
 
       //make sure we update on start by indicating there has been a change
       update_if_input_changed();
+
+      // Set up the insert menus so that they sample data and insert into editor
+      function setup_insert_dataset_dropdown_handler(divId, editorObj) {
+        var menu_id = ["#", divId, ".dropdown-menu li"].join("");
+
+        $(document.body).on('click', menu_id, function (event) {
+
+          var $target = $(event.currentTarget);
+          // if ($target.is('.dropdown-submenu')) return false;
+          var sampling_description = $target.text();
+
+          $target.closest('.btn-group')
+            .find('[data-bind="label"]')
+            .end()
+            .children('.dropdown-toggle').dropdown('toggle');
+
+          var call_info = parseSamplingDescriptionToRCode(sampling_description);
+
+          if(call_info != "unknown") {
+            var req = ocpu.rpc(call_info[0], call_info[1], function(output){
+              editorObj.getSession().setValue(numbersToString(output, 3, 10));
+            });
+            req.fail(function(){
+              alert("R returned an error: " + req.responseText); 
+            });
+          } else {
+            alert("Could not sample with description: " + description); 
+          }
+
+          return false;
+
+        });
+      }
+
+      setup_insert_dataset_dropdown_handler("InsertMenuA", editorA);
+      setup_insert_dataset_dropdown_handler("InsertMenuB", editorB);
 
       // Set editor A in focus
       editorA.focus();
@@ -150,8 +188,21 @@
 
     <div class="col-md-5">
 
-      <div class="panel panel-default">
-        <div class="panel-heading"><strong>Data set A</strong></div>
+      <div class="panel panel-default panel-danger">
+        <div class="panel-heading clearfix">
+          <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Data set A</h4>
+          <div class="btn-group pull-right">
+            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">Insert <span class="caret"></span></button>
+            <ul class="dropdown-menu" id="InsertMenuA">
+              <li><a href="#">Uniform(0, 20) - 50 samples</a></li>
+              <li><a href="#">Uniform(0, 50) - 50 samples</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Normal(10, 4) - 50 samples</a></li>
+              <li><a href="#">Normal(40, 4) - 50 samples</a></li>
+            </ul>
+          </div>
+        </div>
+
         <div class="panel-body">
           <div id="editorA"></div>
 
@@ -192,8 +243,21 @@
 
     <div class="col-md-5">
 
-      <div class="panel panel-default">
-        <div class="panel-heading"><strong>Data set B</strong></div>
+      <div class="panel panel-default panel-success">
+        <div class="panel-heading clearfix">
+          <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Data set B</h4>
+          <div class="btn-group pull-right">
+            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">Insert <span class="caret"></span></button>
+            <ul class="dropdown-menu" id="InsertMenuB">
+              <li><a href="#">Uniform(0, 20) - 50 samples</a></li>
+              <li><a href="#">Uniform(0, 50) - 50 samples</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Normal(10, 4) - 50 samples</a></li>
+              <li><a href="#">Normal(40, 4) - 50 samples</a></li>
+            </ul>
+          </div>
+        </div>
+
         <div class="panel-body">
           <div id="editorB"></div>
         </div>

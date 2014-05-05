@@ -11,6 +11,9 @@ export(cramer.mises.normality.test)
 
 export(read.clearstats.bib.file)
 
+export(runif_sample)
+export(rnorm_sample)
+
 import(ggplot2)
 import(opencpu)
 import(nortest)
