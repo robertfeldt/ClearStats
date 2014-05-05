@@ -1,12 +1,17 @@
 export(density_plot)
-export(is_dataset_normally_distributed)
+
 export(parse_dataset_from_string)
 export(data_frame_from_strings)
+
+export(is_dataset_normally_distributed)
 export(interpret.p.value)
 export(shapiro.wilk.normality.test)
 export(anderson.darling.normality.test)
 export(cramer.mises.normality.test)
 
+export(read.clearstats.bib.file)
+
 import(ggplot2)
 import(opencpu)
 import(nortest)
+import(bibtex)

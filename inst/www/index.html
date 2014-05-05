@@ -28,34 +28,86 @@
       //This app requires OpenCPU 1.0.1 or higher!
 
       function parse_dataset_from_string(str){
-        return( str.split(/\s*(?:,|;|\s+)\s*/).map(parseFloat) )
+        // Split then parse to float. Might return NaN for non-number strings.
+        var values = str.split(/\s*(?:,|;|\s+)\s*/).map(parseFloat);
+
+        // Filter so NaN is not returned.
+        var result = _.filter(values, function(n){ return !isNaN(n)});
+        
+        return( result );
       }
 
-      function draw_densityplot(){
-        var req = $("#densityplot").rplot("density_plot", {
-          "a" : parse_dataset_from_string(editorA.getValue()),
-          "b" : parse_dataset_from_string(editorB.getValue())
-        }).fail(function(){
+      function draw_densityplot(args){
+        var req = $("#densityplot").rplot("density_plot", args).fail(function(){
           alert(req.responseText);
         });
       }
 
-      function update(){
-        draw_densityplot();
+      function parse_datasets() {
+        var result = {
+          "a" : parse_dataset_from_string(editorA.getValue()),
+          "b" : parse_dataset_from_string(editorB.getValue())          
+        }
+        return(result);
+      }
+
+      var datasets;
+
+      // Comparing objects for equality in Javascript is quite complex but this
+      // should take care of it even if recursive hash-like objects etc.
+      function isEqualRecursiveCompare(obj, reference){
+        if(obj === reference) return true;
+        if(obj.constructor !== reference.constructor) return false;
+        if(obj instanceof Array){
+          if(obj.length !== reference.length) return false;
+          for(var i=0, len=obj.length; i<len; i++){
+            if(typeof obj[i] == "object" && typeof reference[j] == "object"){
+              if(!isEqualRecursiveCompare(obj[i], reference[i])) return false;
+            } else if(obj[i] !== reference[i]) {return false;}
+          }
+        } else {
+          var objListCounter = 0;
+          var refListCounter = 0;
+          for(var i in obj){
+            objListCounter++;
+            if(typeof obj[i] == "object" && typeof reference[i] == "object"){
+              if(!isEqualRecursiveCompare(obj[i], reference[i])) return false;
+            }
+            else if(obj[i] !== reference[i]) return false;
+          }
+          for(var i in reference) refListCounter++;
+            if(objListCounter !== refListCounter) return false;
+        }
+        return true; //Every object and array is equal
+      }
+
+      function update_if_input_changed(){
+        var dsets = parse_datasets();
+
+        // We only update if there was actually a change in the datasets entered
+        // in the editor windows...
+        if(isEqualRecursiveCompare(dsets, datasets)) {
+          // console.log("No change!")
+        } else {
+          datasets = dsets;
+          // console.log("Changed!")
+          draw_densityplot(datasets);
+        }
       }
 
       //auto run after 3 seconds of no activity
       //var update = _.debounce(domarkdown, 3000);
 
       //register events
-      editorA.on("change", update);
-      editorB.on("change", update);
+      editorA.on("change", update_if_input_changed);
+      editorB.on("change", update_if_input_changed);
+
+      //draw on start
+      datasets = parse_datasets();
+      draw_densityplot(datasets);
 
       // Set editor A in focus
       editorA.focus();
-
-      //draw on start
-      draw_densityplot();
     });
 </script>
 
