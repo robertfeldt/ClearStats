@@ -40,6 +40,6 @@ For more information about OpenCPU apps, see [opencpu.js](https://github.com/jer
 
 ## Acknowledgements
 
-This work was partly funded by The Knowledge Foundation (KKS) through the project 20130085 Testing of Critical System Characteristics (TOCSYC), and by Vinnova (Swedish Innovation Agency) through the project Test Innovation Engine Sweden (TIES).
+This work was partly funded by The Knowledge Foundation (KKS) through the project 20130085 [Testing of Critical System Characteristics](http://tocsyc.se/) (TOCSYC), and by Vinnova (Swedish Innovation Agency) through the project [Test Innovation Engine Sweden](http://www.explanea.com/ties) (TIES).
 
 Thanks to Jeroen Ooms for OpenCPU.
