@@ -87,7 +87,8 @@
 
           if(call_info != "unknown") {
             var req = ocpu.rpc(call_info[0], call_info[1], function(output){
-              editorObj.getSession().setValue(numbersToString(output, 3, 10));
+              var s = "# " + sampling_description + "\n" + numbersToString(output, 3, 10);
+              editorObj.getSession().setValue(s);
             });
             req.fail(function(){
               alert("R returned an error: " + req.responseText); 
