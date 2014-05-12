@@ -1,4 +1,8 @@
-There are quite a few parts of the ClearStats git repo:
+There are quite a few parts of the ClearStats git repo. In short you get the structure from:
+
+"R code goes in the R subdir, opencpu web app related goes into inst/www. Don't touch inst/www/bower_components at all. Copy inst/www/index.html when doing a new web app (say inst/www/index_effect_size.html) and add your javascript in there. When your javascript grows or becomes more generally useful copy it into its own file in the inst/www/js subdir and include in the html file."
+
+More details:
 
 1. R subdir: R code in .R files
 
