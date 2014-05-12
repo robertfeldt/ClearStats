@@ -12,4 +12,5 @@ Imports:
     nortest,
     bibtex
 Suggests:
-    opencpu (>= 1.0.1)
+    opencpu (>= 1.0.1),
+    testthat

@@ -14,6 +14,12 @@ export(read.clearstats.bib.file)
 export(runif_sample)
 export(rnorm_sample)
 
+export(cliffs.d)
+export(print.cliffs.d)
+
+export(a.statistic)
+export(print.a.statistic)
+
 import(ggplot2)
 import(opencpu)
 import(nortest)
