@@ -5,6 +5,9 @@ start:
 update:
 	Rscript ./helpscripts/install_clearstats.R
 
+test:
+	Rscript ./helpscripts/test_clearstats.R
+
 compare2:
 	Rscript ./helpscripts/install_clearstats.R
 	Rscript ./helpscripts/install_packages_for_shiny_apps.R
