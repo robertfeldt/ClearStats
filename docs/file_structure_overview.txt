@@ -1,0 +1,19 @@
+There are quite a few parts of the ClearStats git repo:
+
+1. R subdir: R code in .R files
+
+2. Namespace file: Lists the R functions to be exported from the ClearStats R package.
+ - Example 1: 
+  a, You add a new R function named my_R_function in the R/my_funcs.R file
+  b, You add a line "export(my_R_function)" to the NAMESPACE file
+  c, You can now use the my_R_function after installing and including the ClearStats package or call the func from the opencpu web front end.
+
+3. inst subdir: Anything inside this directory will be included in the R package.
+
+4. inst/www subdir: Everything that goes in here will be installed as an OpenCPU web app. We need to put all javascript libs and files, html files etc in here to use it in the web app.
+
+5. inst/www/bower_components: We use the javascript build tool bower to ensure we have the right version of javascript libraries we use in the OpenCPU web app. We should never edit the contents of this subdir manually, it is handled by bower automatically based on the info in the file inst/www/bower.json. Currently we use jquery, underscore, bootstrap and the ace editor and bower handles these dependencies.
+
+6. inst/www/js subdir: Here we put our generally useful javascript code. The more specific, "glue" javascript code for a specific web app or web app page (if the app has multiple panes or pages) can go into its index.html file but more generally useful stuff should be put in its own .js file in the inst/www/js subdir and then included into the html file.
+
+7. shiny_apps subdir: Each individual Shiny app is put in its own subdir within this subdir. They can use the R code in the ClearStats R package but have no connection to the OpenCPU app. I propose we mostly use Shiny apps to prototype things. Shiny apps are quicker to run locally though, while OpenCPU is more flexible and scales better and is quicker when run over the internet.
