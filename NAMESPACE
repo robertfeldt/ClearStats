@@ -20,7 +20,13 @@ export(print.cliffs.d)
 export(a.statistic)
 export(print.a.statistic)
 
+export(summary_effect_size)
+export(delta_gr)
+export(vargha_delaney_effect_size)
+
 import(ggplot2)
 import(opencpu)
 import(nortest)
 import(bibtex)
+import(orddom)
+import(psych)
