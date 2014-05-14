@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>ClearStats</title>
+
+  <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <script src="bower_components/underscore/underscore.js"></script>    
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="js/opencpu-0.5.js"></script>
+  <script src="bower_components/ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <script src="js/utils.js"></script>
+  <script src="js/dataset.js"></script>
+  <script src="js/sample_and_insert_dataset.js"></script>
+
+  <script>
+    $(function(){
+      var editorA = ace.edit("editorA");
+      editorA.setTheme("ace/theme/tomorrow");
+      editorA.setHighlightActiveLine(false);
+      editorA.getSession().setMode("ace/mode/r");
+      editorA.setFontSize("14px");
+      var original_data_a = "# You can edit and add your own data here:\n10, 16, 20, 20, 24, 30";
+      editorA.setValue(original_data_a, 1); // 1 => cursor pos at end
+
+      var editorB = ace.edit("editorB");
+      editorB.setTheme("ace/theme/clouds");
+      editorB.setHighlightActiveLine(false); // Needed with clouds theme since it becomes yellow otherwise
+      editorB.getSession().setMode("ace/mode/r");
+      editorB.setFontSize("14px");
+      var original_data_b = "# And here:\n22, 22, 24, 28, 40, 55";
+      editorB.setValue(original_data_b, 1); // 1 => cursor pos at end
+
+      //This app requires OpenCPU 1.0.1 or higher!
+
+        function draw_summary(args){
+          var req = $("#summary").rplot("summary_effect_size", args).fail(function(){
+            alert(req.responseText);
+          });
+        }
+        
+        //How the hell do I simply call a R function and display the result?!?!
+        function get_a12(args){
+          var req = ocpu.rpc("vargha_delaney_effect_size", args,
+          function(output){
+            $("#a12").html("<b>Vargha-Delaney effect size is:</b> " + output );
+          });
+        }
+
+      function parse_datasets() {
+        var result = {
+          "a" : parse_dataset_from_string(editorA.getValue()),
+          "b" : parse_dataset_from_string(editorB.getValue())          
+        }
+        return(result);
+      }
+
+      var datasets = []; // Set to empty to make sure it is updated on first run...
+
+      function update_if_input_changed(){
+        var current_datasets = parse_datasets();
+
+        // We only update if there was actually a change in the datasets entered
+        // in the editor windows...
+        if(!isEqualRecursiveCompare(current_datasets, datasets)) {
+          datasets = current_datasets;
+          draw_summary(datasets);
+          get_a12(datasets);
+        }
+      }
+
+      //auto run after 3 seconds of no activity
+      //var update = _.debounce(domarkdown, 3000);
+
+      //register events
+      editorA.on("change", update_if_input_changed);
+      editorB.on("change", update_if_input_changed);
+
+      //make sure we update on start by indicating there has been a change
+      update_if_input_changed();
+
+      // Set up the insert menus so that they sample data and insert into editor
+      function setup_insert_dataset_dropdown_handler(divId, editorObj, originalDataset) {
+        var menu_id = ["#", divId, ".dropdown-menu li"].join("");
+
+        $(document.body).on('click', menu_id, function (event) {
+
+          var $target = $(event.currentTarget);
+          // if ($target.is('.dropdown-submenu')) return false;
+          var sampling_description = $target.text();
+
+          $target.closest('.btn-group')
+            .find('[data-bind="label"]')
+            .end()
+            .children('.dropdown-toggle').dropdown('toggle');
+
+          var call_info = parseSamplingDescriptionToRCode(sampling_description);
+
+          if(call_info == "original_data_set") {
+
+            editorObj.getSession().setValue(originalDataset);
+
+          } else if(call_info != "unknown") {
+
+            var req = ocpu.rpc(call_info[0], call_info[1], function(output){
+              var s = numbersToString(output, 3, 10);
+              editorObj.getSession().setValue(s);
+            });
+            req.fail(function(){
+              alert("R returned an error: " + req.responseText); 
+            });
+
+          } else {
+
+            alert("Could not sample with description: " + description); 
+
+          }
+
+          return false;
+
+        });
+      }
+
+      setup_insert_dataset_dropdown_handler("InsertMenuA", editorA, original_data_a);
+      setup_insert_dataset_dropdown_handler("InsertMenuB", editorB, original_data_b);
+
+      // Set editor A in focus
+      editorA.focus();
+    });
+</script>
+
+<style type="text/css" media="screen">
+  body { 
+    padding-top: 65px; 
+  }
+
+  #editorA { 
+    border: 1px solid #DFDFDF;
+    -moz-border-radius: 3px; 
+    -webkit-border-radius: 3px; 
+    border-radius: 3px;
+    height: 60px;
+    width: 100%;
+  }
+
+  #editorB { 
+    border: 1px solid #DFDFDF;
+    -moz-border-radius: 3px; 
+    -webkit-border-radius: 3px; 
+    border-radius: 3px;
+    height: 60px;
+    width: 100%;
+  }
+
+  #summary {
+    height: 600px;
+    width: 800px;
+  }
+  
+</style>
+
+</head>
+<body>
+
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">ClearStats</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Compare 2</a></li>
+          <li><a href="#">Analyze 1</a></li>
+          <li><a href="#">Help</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-1"></div>
+
+    <div class="col-md-5">
+      <div id="summary"></div>
+    </div>
+
+    <div class="col-md-4">
+    
+    </div>
+
+    <div class="col-md-1"></div>
+
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div id="a12"></div>
+    <hr>
+    <div class="col-md-1"></div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-1"></div>
+
+    <div class="col-md-5">
+
+      <div class="panel panel-default panel-danger">
+        <div class="panel-heading clearfix">
+          <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Data set A</h4>
+          <div class="btn-group pull-right">
+            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">Insert <span class="caret"></span></button>
+            <ul class="dropdown-menu" id="InsertMenuA">
+              <li><a href="#">Uniform(0, 20) - 50 samples</a></li>
+              <li><a href="#">Uniform(0, 50) - 50 samples</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Normal(10, 4) - 50 samples</a></li>
+              <li><a href="#">Normal(40, 4) - 50 samples</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Original data</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel-body">
+          <div id="editorA"></div>
+
+          <br />
+
+        </div>
+
+
+        <div id="textA">
+        </div>
+
+      </div>
+
+
+    </div>
+
+    <div class="col-md-5">
+
+      <div class="panel panel-default panel-success">
+        <div class="panel-heading clearfix">
+          <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Data set B</h4>
+          <div class="btn-group pull-right">
+            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">Insert <span class="caret"></span></button>
+            <ul class="dropdown-menu" id="InsertMenuB">
+              <li><a href="#">Uniform(0, 20) - 50 samples</a></li>
+              <li><a href="#">Uniform(0, 50) - 50 samples</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Normal(10, 4) - 50 samples</a></li>
+              <li><a href="#">Normal(40, 4) - 50 samples</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Original data</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="panel-body">
+          <div id="editorB"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-1"></div>
+
+  </div>
+
+</body>
+</html>
