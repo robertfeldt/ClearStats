@@ -21,3 +21,5 @@ More details:
 6. inst/www/js subdir: Here we put our generally useful javascript code. The more specific, "glue" javascript code for a specific web app or web app page (if the app has multiple panes or pages) can go into its index.html file but more generally useful stuff should be put in its own .js file in the inst/www/js subdir and then included into the html file.
 
 7. shiny_apps subdir: Each individual Shiny app is put in its own subdir within this subdir. They can use the R code in the ClearStats R package but have no connection to the OpenCPU app. I propose we mostly use Shiny apps to prototype things. Shiny apps are quicker to run locally though, while OpenCPU is more flexible and scales better and is quicker when run over the internet.
+
+8. All tests for the R code should be written with testthat and be placed in tests/testthat subdir.
