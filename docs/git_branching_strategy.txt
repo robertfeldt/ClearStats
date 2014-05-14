@@ -1,0 +1,3 @@
+We try to use the following git branch strategy:
+
+http://nvie.com/posts/a-successful-git-branching-model/
