@@ -3,7 +3,8 @@ needed_packages = c(
   "RJSONIO",
   "httr",
   "opencpu",
-  "nortest"
+  "nortest",
+  "orddom"
 )
 
 install_if_missing = function(p) {
