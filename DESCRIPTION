@@ -10,7 +10,8 @@ License: GPL
 Imports:
     ggplot2,
     nortest,
-    bibtex
+    bibtex,
+    orddom
 Suggests:
     opencpu (>= 1.0.1),
     testthat
